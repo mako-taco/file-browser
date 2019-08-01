@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FileInfo, FileInfoType } from "../api/directory";
+import { FileInfo, FileInfoType } from "../api/file";
 import { useAPI } from "../api/react-hook";
 import { useGlobalState } from "../app-state/global-state";
 
@@ -60,7 +60,18 @@ export const DirectoryList: React.FC<DirectoryListProps> = ({ path }) =>
   });
 DirectoryList.displayName = "DirectoryList";
 
-export const FileNode: React.FC<FileInfo> = info => {
-  return <div>{info.basename}</div>;
-};
+export const FileNode: React.FC<FileInfo> = info =>
+  useGlobalState(([state, dispatch]) => {
+    const api = useAPI();
+    const clickHandler = React.useMemo(() => {
+      return async (e: React.MouseEvent) => {
+        e.preventDefault();
+        dispatch({ type: "readfile", path: info.path });
+        const resp = await api.readfile(info.path);
+        dispatch({ type: "readfile-complete", path: info.path, content: resp });
+      };
+    }, [info.path]);
+
+    return <div onClick={clickHandler}>{info.basename}</div>;
+  });
 FileNode.displayName = "FileNode";

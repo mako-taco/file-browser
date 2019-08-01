@@ -12,6 +12,7 @@ export const reducer: Reducer<AppState, AppActions> = debugReducer(
             [action.path]: !state.expandedPaths[action.path]
           }
         };
+      case "readfile":
       case "readdir":
         return {
           ...state,
@@ -30,6 +31,19 @@ export const reducer: Reducer<AppState, AppActions> = debugReducer(
           loadingPaths: {
             ...state.loadingPaths,
             [action.path]: false
+          }
+        };
+      case "readfile-complete":
+        return {
+          ...state,
+          openedFilePath: action.path,
+          loadingPaths: {
+            ...state.loadingPaths,
+            [action.path]: false
+          },
+          fileContents: {
+            ...state.fileContents,
+            [action.path]: action.content
           }
         };
       default:

@@ -19,7 +19,10 @@ export interface APIError {
 
 export type APIResponse<T> = APISuccess<T> | APIError;
 
-export async function apiFetch<T>(path: string): Promise<APIResponse<T>> {
+export async function apiFetch<T>(
+  path: string,
+  noParse = false
+): Promise<APIResponse<T>> {
   const response = await fetch(`${url}${path}`);
   const json = await response.json();
   if (
@@ -30,6 +33,11 @@ export async function apiFetch<T>(path: string): Promise<APIResponse<T>> {
   }
 
   return json;
+}
+
+export async function apiFetchText(path: string): Promise<string> {
+  const response = await fetch(`${url}${path}`);
+  return response.text();
 }
 
 /** Throws if APIError, calls fn if APISuccess */

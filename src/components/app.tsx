@@ -1,9 +1,10 @@
 import * as React from "react";
-import { FileInfoType } from "../api/directory";
+import { FileInfoType } from "../api/file";
 import { GlobalStateProvider } from "../app-state/global-state";
 import { initialState } from "../app-state/initial-state";
 import { reducer } from "../app-state/reducer";
 import { DirectoryNode } from "./directory-node";
+import { FileViewer } from "./file-viewer";
 
 export const App = () => (
   <GlobalStateProvider initialState={initialState} reducer={reducer}>
@@ -17,5 +18,6 @@ export const App = () => (
       dirname={""}
       basename={"ROOT"}
     />
+    <FileViewer />
   </GlobalStateProvider>
 );

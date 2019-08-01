@@ -1,23 +1,5 @@
 import { apiFetchSuccess } from "./fetch";
-
-export enum FileInfoType {
-  DIRECTORY = "directory",
-  FILE = "file"
-}
-
-export interface ResponseFileInfo {
-  atime: number;
-  link: boolean;
-  mtime: number;
-  path: string;
-  size: number;
-  type: FileInfoType;
-}
-
-export type FileInfo = ResponseFileInfo & {
-  dirname: string;
-  basename: string;
-};
+import { FileInfo } from "./file";
 
 interface DirInfo {
   [file: string]: FileInfo;
